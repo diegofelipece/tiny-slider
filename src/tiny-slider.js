@@ -540,12 +540,19 @@ export var tns = function(options) {
 
   function getClientWidth (el) {
     if (el == null) { return; }
-    var div = doc.createElement('div'), rect, width;
-    el.appendChild(div);
-    rect = div.getBoundingClientRect();
-    width = rect.right - rect.left;
-    div.remove();
-    return width || getClientWidth(el.parentNode);
+    try {
+      var div = doc.createElement('div'), rect, width;
+      el.appendChild(div);
+      rect = div.getBoundingClientRect();
+      width = rect.right - rect.left;
+      div.remove();
+      
+      if (width) return width;
+      if (el.parentNode.parentNode !== null) return getClientWidth(el.parentNode);
+    } catch (error) {
+      console.warn('Couldnt get client width')
+    }
+    return;
   }
 
   function getViewportWidth () {
