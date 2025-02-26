@@ -988,6 +988,7 @@ var tns = function (options) {
       div.remove();
       if (width) return width;
       if (el.parentNode.parentNode !== null) return getClientWidth(el.parentNode);
+      return el.offsetWidth;
     } catch (error) {
       console.warn('Couldnt get client width');
     }
